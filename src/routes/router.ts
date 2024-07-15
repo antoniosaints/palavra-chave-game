@@ -2,8 +2,8 @@ import { Router, Request, Response } from 'express';
 
 const router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-  res.send('API Home');
+router.get('/board', (req: Request, res: Response) => {
+  res.render('index', { title: 'Express' });
 });
 
 router.get('/hello', (req: Request, res: Response) => {

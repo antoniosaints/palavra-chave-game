@@ -2,7 +2,9 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import { Server as SocketIOServer } from 'socket.io';
-import router from './infra/server/routes';
+import { Liquid } from 'liquidjs';
+import path from 'path';
+import router from './routes/router';
 
 const app = express();
 const server = http.createServer(app);
@@ -12,13 +14,22 @@ const io = new SocketIOServer(server, {
     },
 });
 
+// Configurar Liquid como o template engine
+const engine = new Liquid({
+  root: path.resolve(__dirname, 'views/'), // diretório das views
+  extname: '.liquid' // extensão dos arquivos de template
+});
+app.engine('liquid', engine.express()); // definir o engine
+app.set('view engine', 'liquid'); // definir a view engine
+app.set('views', path.resolve(__dirname, 'views')); // definir o diretório das views
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Rotas
-app.use('/api', router);
+app.use('/home', router);
 
 // Configuração do Socket.IO
 io.on('connection', (socket) => {
