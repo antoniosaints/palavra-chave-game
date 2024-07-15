@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" async ></script>
   <title>Socket.IO Client</title>
-  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" async defer></script>
 </head>
 <body>
   <h1>Socket.IO Client - {{ title }}</h1>
   <input type="text" id="messageInput" placeholder="Type a message">
+  <div data-id="23" class="card-board">Cachaça</div>
   <button id="sendButton">Send</button>
   <div id="messages"></div>
 
@@ -23,17 +24,25 @@
 
     // Receber mensagens do servidor
     socket.on('message', (msg) => {
-      const messagesDiv = document.getElementById('messages');
-      const messageElement = document.createElement('p');
-      messageElement.textContent = msg;
-      messagesDiv.appendChild(messageElement);
+      document.getElementById('messageInput').style.background = "green";
+      if (msg == 23) document.querySelector(".card-board").style.background = "red";
     });
+
+
+    const cardsToArray = document.querySelectorAll(".card-board");
+
+    cardsToArray.forEach((card) => {
+      card.addEventListener("click", () => {
+        socket.emit("message", card.getAttribute("data-id"))
+      })
+    })
 
     // Enviar mensagens para o servidor
     document.getElementById('sendButton').addEventListener('click', () => {
       const messageInput = document.getElementById('messageInput');
       const message = messageInput.value;
       socket.emit('message', message);
+      socket.emit('selectedCard', 3);
       messageInput.value = '';
     });
   </script>

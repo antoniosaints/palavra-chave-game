@@ -5,6 +5,7 @@ import { Server as SocketIOServer } from 'socket.io';
 import { Liquid } from 'liquidjs';
 import path from 'path';
 import router from './routes/router';
+import { managerCards } from './ws/managerCards';
 
 const app = express();
 const server = http.createServer(app);
@@ -33,12 +34,9 @@ app.use('/home', router);
 
 // Configuração do Socket.IO
 io.on('connection', (socket) => {
-  console.log('Novo cliente conectado');
-
-  socket.on('message', (msg) => {
-    console.log('Mensagem recebida: ', msg);
-    io.emit('message', msg);
-  });
+  console.log('Novo cliente conectado ' + socket.id);
+  
+  managerCards(io, socket);
 
   socket.on('disconnect', () => {
     console.log('Cliente desconectado');
