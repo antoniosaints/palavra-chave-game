@@ -12,7 +12,7 @@
       "skipLibCheck": true,                     /* Skip type checking of declaration files. */
       "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
     },
-    "include": ["src/**/*.ts", "src/public/scriptjss"],                 /* Include all TypeScript files in the 'src' folder. */
-    "exclude": ["node_modules"]                 /* Exclude 'node_modules' folder from the compilation. */
+    "include": ["src/**/*.ts", "public/scriptjss"],                 /* Include all TypeScript files in the 'src' folder. */
+    "exclude": ["node_modules", "dist"]                 /* Exclude 'node_modules' folder from the compilation. */
   }
   

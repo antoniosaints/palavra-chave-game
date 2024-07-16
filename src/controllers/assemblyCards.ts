@@ -28,22 +28,22 @@ export class AssemblyCards {
             let equipeId;
             if (index < 8) {
                 color = bgColorBlue;
-                classe = !isEspiao ? '.is-random' : 'is-blue-simple';
+                classe = !isEspiao ? 'is-random' : 'is-blue-simple';
                 classeDefined = 'is-blue';
                 equipeId = 1;
             } else if (index < 16) {
                 color = bgColorRed;
-                classe = !isEspiao ? '.is-random' : 'is-red-simple';
+                classe = !isEspiao ? 'is-random' : 'is-red-simple';
                 classeDefined = 'is-red';
                 equipeId = 2;
             } else if (index < 17) {
                 color = 'black';
-                classe = !isEspiao ? '.is-random' : 'is-black-simple';
+                classe = !isEspiao ? 'is-random' : 'is-black-simple';
                 classeDefined = 'is-black';
                 equipeId = 3;
             } else {
                 color = defaultBG;
-                classe = 'is-white';
+                classe = 'is-random';
                 classeDefined = 'is-other';
                 equipeId = 4;
             }

@@ -1,13 +1,10 @@
 import { Router, Request, Response } from 'express';
+import { getHtml } from '../server';
 
 const router = Router();
 
-router.get('/board', (req: Request, res: Response) => {
-  res.render('gameboard', { title: 'Express' });
-});
-
-router.get('/hello', (req: Request, res: Response) => {
-  res.send('Hello, world!');
+router.get('/jogar', (req: Request, res: Response) => {
+  res.sendFile(getHtml("gameboard"));
 });
 
 export default router;

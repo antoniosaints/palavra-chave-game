@@ -1,8 +1,11 @@
 import { Server as SocketIOServer, Socket } from 'socket.io';
 import { AssemblyCards } from '../controllers/assemblyCards';
-
-let quantideJogadores = 0;
-const mounCards = () => {
+type jogadores = {
+  id: string,
+  funcao: string
+}
+let jogadores: Array<jogadores> = [];
+const mountCardsToFrontend = () => {
   const assemblyCards = new AssemblyCards();
   let equipeStart = Math.floor(Math.random() * 2) + 1;
   const cardsToIterator = assemblyCards.getCardsWithColors()
@@ -16,7 +19,7 @@ export const managerCards = (io: SocketIOServer, socket: Socket) => {
   });
 
   socket.on('iniciar_jogo', (action) => {
-    const { equipeStart, cardsToIterator } = mounCards();
+    const { equipeStart, cardsToIterator } = mountCardsToFrontend();
     io.emit('iniciar_jogo',
       action,
       equipeStart,
@@ -26,7 +29,7 @@ export const managerCards = (io: SocketIOServer, socket: Socket) => {
   });
 
   socket.on('reiniciar_jogo', (action) => {
-    const { equipeStart, cardsToIterator } = mounCards();
+    const { equipeStart, cardsToIterator } = mountCardsToFrontend();
     io.emit('reiniciar_jogo',
       action,
       equipeStart,
@@ -35,13 +38,21 @@ export const managerCards = (io: SocketIOServer, socket: Socket) => {
     );
   });
 
-  socket.on('entrou_partida', () => {
-    if (quantideJogadores === 4) {
-      io.emit('entrou_partida', `Maximo de jogadores - ${quantideJogadores}`);
+  socket.on('entrou_partida', (entrou_como) => {
+    if (jogadores.length === 4) {
+      io.emit('entrou_partida', `Maximo de jogadores - ${jogadores.length}`);
       return
     }
-    quantideJogadores++;
-    io.emit('entrou_partida', quantideJogadores);
+    if (jogadores.find((jogador) => jogador.id === socket.id)) {
+      io.emit('entrou_partida', 'Jogador ja se encontra na partida');
+      return
+    }
+    jogadores.push({
+      id: socket.id,
+      funcao: entrou_como
+    });
+    console.log(`${socket.id} entrou na partida`);
+    io.emit('entrou_partida', jogadores);
   });
 
   socket.on('trocar_lado', () => {
@@ -50,5 +61,11 @@ export const managerCards = (io: SocketIOServer, socket: Socket) => {
 
   socket.on('selected_this_card', (msg) => {
     io.emit('selected_this_card', msg.uniqId, msg.classeDefined, msg.classe);
+  });
+
+  socket.on('disconnect', () => {
+    jogadores = jogadores.filter((jogador) => jogador.id !== socket.id);
+    console.log(`${socket.id} saiu da partida`);
+    io.emit('entrou_partida', jogadores);
   });
 };

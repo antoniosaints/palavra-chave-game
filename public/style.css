@@ -94,8 +94,9 @@ body {
 .team {
   display: flex;
   justify-content: space-between;
-  width: 80%;
-  margin-bottom: 10px;
+  width: max-content;
+  gap: 10px;
+  margin: 0 20px 10px 20px;
 }
 
 .team .div-contain {
@@ -453,13 +454,12 @@ button:hover {
 }
 
 .indicator-phase label {
-  font-size: 1.5rem;
-  font-size: xx-large;
+  font-size: 3.5vw;
   background-color: white;
   color: black;
-  border: 4px outset black;
+  border: 3px outset black;
   border-radius: 10px;
-  padding: 3px 20px;
+  padding: 0px 20px;
   text-align: center;
 }
 
@@ -473,6 +473,9 @@ button:hover {
   }
   .game-board {
     order: 1;
+  }
+  .team .div-contain h2 {
+    margin: 0;
   }
   .card {
     width: auto;
@@ -500,7 +503,7 @@ button:hover {
   }
   .movimentos_jogo {
     margin-top: 10px;
-    max-height: calc(100vh - 85vh);
+    max-height: 50px;
   }
   .movimentos_jogo label {
     font-size: 0.7rem;
