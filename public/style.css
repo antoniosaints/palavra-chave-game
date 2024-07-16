@@ -135,9 +135,9 @@ body {
 }
 
 .is-red-simple {
-  color: #e0e0e0;
-  border: 2px outset rgb(204, 65, 23);
-  background: rgb(156, 5, 5);
+  color: #e0e0e0 !important;
+  border: 2px outset rgb(204, 65, 23) !important;
+  background: rgb(156, 5, 5) !important;
 }
 
 .is-black {
@@ -166,9 +166,9 @@ body {
 }
 
 .is-black-simple {
-  color: #e0e0e0;
-  border: 2px outset rgb(0, 0, 0);
-  background: rgb(0, 0, 0);
+  color: #e0e0e0 !important;
+  border: 2px outset rgb(0, 0, 0) !important;
+  background: rgb(0, 0, 0) !important;
 }
 
 .is-blue {
@@ -197,9 +197,9 @@ body {
 }
 
 .is-blue-simple {
-  color: #e0e0e0;
-  border: 2px outset #2f3ad1;
-  background: rgb(3, 41, 146);
+  color: #e0e0e0 !important;
+  border: 2px outset #2f3ad1 !important;
+  background: rgb(3, 41, 146) !important;
 }
 
 .is-other {

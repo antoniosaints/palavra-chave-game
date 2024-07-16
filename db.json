@@ -1,0 +1,30 @@
+{
+    "usuarios": [
+        {
+            "id": "f1b5",
+            "name": "Eduardo Oliveira",
+            "color": "Cinza"
+        }
+    ],
+    "rankings": [
+        {
+            "id": "f1b5",
+            "user": "f1b5",
+            "points": 0
+        }
+    ],
+    "salas": [
+        {
+            "id": "c364",
+            "name": "Sala dos feras",
+            "status": true
+        }
+    ],
+    "usuarios_salas": [
+        {
+            "id": "f1b5",
+            "sala": "c364"
+        }
+    ],
+    "palavras_chaves": []
+}

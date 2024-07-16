@@ -13,18 +13,13 @@ const mountCardsToFrontend = () => {
   return { equipeStart, cardsToIterator };
 }
 export const managerCards = (io: SocketIOServer, socket: Socket) => {
-  socket.on('message', (msg) => {
-    console.log('Mensagem recebida: ', msg);
-    io.emit('message', msg);
-  });
 
   socket.on('iniciar_jogo', (action) => {
     const { equipeStart, cardsToIterator } = mountCardsToFrontend();
     io.emit('iniciar_jogo',
       action,
       equipeStart,
-      cardsToIterator,
-      false
+      cardsToIterator
     );
   });
 
@@ -33,8 +28,7 @@ export const managerCards = (io: SocketIOServer, socket: Socket) => {
     io.emit('reiniciar_jogo',
       action,
       equipeStart,
-      cardsToIterator,
-      false
+      cardsToIterator
     );
   });
 
@@ -59,8 +53,8 @@ export const managerCards = (io: SocketIOServer, socket: Socket) => {
     io.emit('trocar_lado', true);
   });
 
-  socket.on('selected_this_card', (msg) => {
-    io.emit('selected_this_card', msg.uniqId, msg.classeDefined, msg.classe);
+  socket.on('selected_this_card', (event) => {
+    io.emit('selected_this_card', event.uniqId, event.classeDefined, event.classe, event.classeEspiao);
   });
 
   socket.on('disconnect', () => {

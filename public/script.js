@@ -23,25 +23,33 @@ reiniciar.addEventListener("click", () => {
   socket.emit("reiniciar_jogo", true);
 });
 
+const sendEquipeSide = (equipe) => {
+  socket.emit("entrou_partida", equipe);
+};
+
 entrarComoAgenteAzul.addEventListener("click", () => {
-  socket.emit("entrou_partida", "entrarComoAgenteAzul");
+  sendEquipeSide("entrarComoAgenteAzul");
+  isEspiao = false;
 });
 
 entrarComoEspiaoAzul.addEventListener("click", () => {
-  socket.emit("entrou_partida", "entrarComoEspiaoAzul");
+  sendEquipeSide("entrarComoEspiaoAzul");
+  isEspiao = true;
 });
 
 entrarComoEspiaoVermelho.addEventListener("click", () => {
-  socket.emit("entrou_partida", "entrarComoEspiaoVermelho");
+  sendEquipeSide("entrarComoEspiaoVermelho");
+  isEspiao = true;
 });
 
 entrarComoAgenteVermelho.addEventListener("click", () => {
-  socket.emit("entrou_partida", "entrarComoAgenteVermelho");
+  sendEquipeSide("entrarComoAgenteVermelho");
+  isEspiao = false;
 });
 
-socket.on("iniciar_jogo", (action, equipeStart, cardsToIterator, isEspiao) => {
+socket.on("iniciar_jogo", (action, equipeStart, cardsToIterator) => {
   if (action) {
-    startGame(equipeStart, cardsToIterator, isEspiao);
+    startGame(equipeStart, cardsToIterator);
     iniciar_jogo.style.display = "none";
     reiniciar.style.display = "inline";
   }
@@ -50,12 +58,10 @@ socket.on("iniciar_jogo", (action, equipeStart, cardsToIterator, isEspiao) => {
 socket.on("entrou_partida", (jogadores) => {
   console.log(jogadores);
   if (typeof jogadores === "object") {
-      jogadores.forEach((jogador) => {
-        document.getElementById(jogador.funcao).innerText = jogador.id;
-        document
-          .getElementById(jogador.funcao)
-          .setAttribute("disabled", true);
-      });
+    jogadores.forEach((jogador) => {
+      document.getElementById(jogador.funcao).innerText = jogador.id;
+      document.getElementById(jogador.funcao).setAttribute("disabled", true);
+    });
   }
   if (jogadores.length === 4) {
     iniciar_jogo.style.display = "inline";
@@ -64,17 +70,17 @@ socket.on("entrou_partida", (jogadores) => {
 
 socket.on(
   "reiniciar_jogo",
-  (action, equipeStart, cardsToIterator, isEspiao) => {
+  (action, equipeStart, cardsToIterator) => {
     if (action) {
-      startGame(equipeStart, cardsToIterator, isEspiao);
+      startGame(equipeStart, cardsToIterator);
       iniciar_jogo.style.display = "none";
     }
   }
 );
 
-socket.on("selected_this_card", (card_selected, classeDefined, classe) => {
+socket.on("selected_this_card", (card_selected, classeDefined, classe, classeEspiao) => {
   document.getElementById(card_selected).classList.add("is-discovery");
-  document.getElementById(card_selected).classList.remove(classe);
+  document.getElementById(card_selected).classList.remove(isEspiao ? classeEspiao : classe);
   document.getElementById(card_selected).classList.add(classeDefined);
 });
 
@@ -107,21 +113,20 @@ if (isAdmin) {
   compartilhar.style.display = "none";
 }
 
-const startGame = (equipeBeggin, wordsWithColors, isEspiao) => {
+const startGame = (equipeBeggin, wordsWithColors) => {
   EquipeAtual = equipeBeggin;
-  isEspiao = isEspiao;
   CanSelectCards = true;
   changeSide(EquipeAtual);
   gameBoard.innerHTML = "";
 
   wordsWithColors.forEach(
-    ({ word, color, classe, classeDefined, equipeId }) => {
+    ({ word, color, classe, classeEspiao, classeDefined, equipeId }) => {
       const uniqId = `card_${word}`;
       const card = document.createElement("div");
       card.classList.add("card");
       card.id = uniqId;
       card.textContent = word;
-      card.classList.add(classe);
+      card.classList.add(isEspiao ? classeEspiao : classe);
 
       // Define the click handler separately
       const handleClick = () => {
@@ -134,6 +139,7 @@ const startGame = (equipeBeggin, wordsWithColors, isEspiao) => {
           uniqId,
           classeDefined,
           classe,
+          classeEspiao
         });
         card.removeEventListener("click", handleClick);
       };

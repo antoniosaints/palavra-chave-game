@@ -24,30 +24,35 @@ export class AssemblyCards {
         const wordsWithColors = selectedWord.map((word: string, index: number) => {
             let color;
             let classe;
+            let classeEspiao;
             let classeDefined;
             let equipeId;
             if (index < 8) {
                 color = bgColorBlue;
-                classe = !isEspiao ? 'is-random' : 'is-blue-simple';
+                classe = 'is-random';
+                classeEspiao = 'is-blue-simple';
                 classeDefined = 'is-blue';
                 equipeId = 1;
             } else if (index < 16) {
                 color = bgColorRed;
-                classe = !isEspiao ? 'is-random' : 'is-red-simple';
+                classe = 'is-random';
+                classeEspiao = 'is-red-simple';
                 classeDefined = 'is-red';
                 equipeId = 2;
             } else if (index < 17) {
                 color = 'black';
-                classe = !isEspiao ? 'is-random' : 'is-black-simple';
+                classe = 'is-random';
+                classeEspiao = 'is-black-simple';
                 classeDefined = 'is-black';
                 equipeId = 3;
             } else {
                 color = defaultBG;
                 classe = 'is-random';
+                classeEspiao = 'is-random';
                 classeDefined = 'is-other';
                 equipeId = 4;
             }
-            return { word, color, classe, classeDefined, equipeId };
+            return { word, color, classe, classeEspiao, classeDefined, equipeId };
         });
         wordsWithColors.sort(() => Math.random() - 0.5);
 

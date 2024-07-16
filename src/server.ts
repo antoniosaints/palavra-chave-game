@@ -18,9 +18,8 @@ export const getHtml = (fileName: any): any => {
   return path.join(__dirname, '../public/', fileName + '.html');
 }
 
-app.use(express.static(path.resolve(__dirname, '../public')));
-
 // Middleware
+app.use(express.static(path.resolve(__dirname, '../public')));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
