@@ -3,7 +3,7 @@ import { Router, Request, Response } from 'express';
 const router = Router();
 
 router.get('/board', (req: Request, res: Response) => {
-  res.render('index', { title: 'Express' });
+  res.render('gameboard', { title: 'Express' });
 });
 
 router.get('/hello', (req: Request, res: Response) => {

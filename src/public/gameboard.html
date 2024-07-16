@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palavra chave</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="quantidade-jogadores">
+            <h3>Jogadores - 04</h3>
+        </div>
+        <div class="">
+            <button>Regras</button>
+            <button id="button_reiniciar" style="display: none;">Reiniciar</button>
+            <button class="button-perfil">Perfil</button>
+        </div>
+    </div>
+    <div class="team">
+        <div>
+            <div id="team-blue" class="div-contain time-blue">
+                <h2>CELESTES</h2>
+                <input type="text" class="spy-input" placeholder="Digite uma palavra">
+                <div>
+                    <p><button id="entrarComoAgenteAzul">Entrar como agente</button></p>
+                    <p><button id="entrarComoEspiaoAzul">Entrar como espião</button></p>
+                </div>
+            </div>
+            <div class="acoes_jogo">
+                <div class="acoes_jogo_basicas" style="display: flex; flex-direction: column;">
+                    <a href="" class="btn_acao compartilhar" style="text-decoration: none; color: white;">Compartilhar
+                        sala</a>
+                    <a href="" class="btn_acao redefinir_sala" style="text-decoration: none; color: white;">Redefinir
+                        equipes</a>
+                    <a href="" class="btn_acao embaralhar_equipes"
+                        style="text-decoration: none; color: white;">Embaralhar
+                        equipes</a>
+                    <a href="" class="btn_acao sair" style="text-decoration: none; color: white;">Sair</a>
+                </div>
+                <div class="jogadores_partida">
+                    <p>Jogadores na partida: 0</p>
+                </div>
+            </div>
+        </div>
+        <div class="game-board">
+        </div>
+        <div class="team-red-content">
+            <div id="team-red" class="div-contain time-red">
+                <h2>RUBROS</h2>
+                <input type="text" class="spy-input" placeholder="Digite uma palavra">
+                <div>
+                    <p><button id="entrarComoAgenteVermelho">Entrar como agente</button></p>
+                    <p><button id="entrarComoEspiaoVermelho">Entrar como espião</button></p>
+                </div>
+            </div>
+            <div class="movimentos_jogo">
+                <label>Nenhuma ação</label>
+            </div>
+            <div class="iniciar_jogo_div">
+                <button class="iniciar_jogo">Iniciar Jogo</button>
+            </div>
+        </div>
+    </div>
+    <div class="indicator-phase">
+        <label>ARROZ</label>
+        <label>2</label>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
