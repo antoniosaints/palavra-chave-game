@@ -1,19 +1,13 @@
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
-import { Server as SocketIOServer } from 'socket.io';
 import path from 'path';
-import { managerCards } from './ws/managerCards';
 import router from './routes/router';
+import { openConnectionWithSocket } from './ws/socket';
 
 const app = express();
 const server = http.createServer(app);
-const io = new SocketIOServer(server, {
-  cors: {
-    origin: '*',
-  },
-});
-
+openConnectionWithSocket(server);
 export const getHtml = (fileName: any): any => {
   return path.join(__dirname, '../public/', fileName + '.html');
 }
@@ -24,12 +18,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Routes
 app.use(router);
-
-io.on('connection', (socket) => {
-  console.log('Novo cliente conectado ' + socket.id);
-  managerCards(io, socket);
-});
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
